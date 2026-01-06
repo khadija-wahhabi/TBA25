@@ -52,8 +52,6 @@ class Room:
         return f"\nVous êtes {self.description}\n\n{self.get_exit_string()}\n"
 
     def get_inventory(self):
-        if not hasattr(self, "inventory"):
-            self.inventory = {}  
         if not self.inventory:
             return "Il n'y a rien ici."
         s = "La pièce contient :"
