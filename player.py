@@ -1,4 +1,5 @@
 # Define the Player class.
+class Player:
     """
     This class represents the player in the game.
     The player has a name and is always located in one room at a time.
@@ -17,8 +18,6 @@
         >>> player.name
         'Indiana'
     """
-
-class Player():
 
     # Define the constructor.
     def __init__(self, name):
