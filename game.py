@@ -79,6 +79,7 @@ class Game:
         # Setup player and starting room
         self.player = Player(input("\nEntrez votre nom: "))
         self.player.current_room = cour
+        self.player.history.append(self.player.current_room)
 
     # Play the game
     def play(self):
