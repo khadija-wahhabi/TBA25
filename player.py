@@ -50,4 +50,15 @@ class Player:
             s += f"\n    - {room.name}"
         return s
 
+    def back(self):
+        if len(self.history) < 2:
+            print("\nImpossible de revenir en arrière : aucune pièce précédente.\n")
+            return False
+        
+        self.history.pop()
+        
+        self.current_room = self.history[-1]
+        print(self.current_room.get_long_description())
+        return True
+
     
