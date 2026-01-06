@@ -73,7 +73,21 @@ class Player:
             return "Votre inventaire est vide."
         s = "\nVous disposez des items suivants :"
         for item in self.inventory:
-            s += f"\n    - {item}"  # Utilise __str__ de Item
+            s += f"\n    - {item}" 
         return s
 
-    
+    def take(self, item_name):
+        item = self.current_room.remove_item(item_name)
+        if item:
+            self.inventory[item.name] = item  # Ajouter au joueur
+            print(f"Vous avez pris {item.name}.")
+        else:
+            print(f"Il n'y a pas d'objet nommé '{item_name}' ici.")
+
+    def drop(self, item_name):
+        item = self.inventory.pop(item_name, None)
+        if item:
+            self.current_room.add_item(item)  # Ajouter dans la pièce
+            print(f"Vous avez déposé {item.name}.")
+        else:
+            print(f"Vous n'avez pas d'objet nommé '{item_name}' dans votre inventaire.") 
