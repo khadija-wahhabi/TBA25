@@ -79,15 +79,17 @@ class Player:
     def take(self, item_name):
         item = self.current_room.remove_item(item_name)
         if item:
-            self.inventory[item.name] = item  # Ajouter au joueur
-            print(f"Vous avez pris {item.name}.")
+            self.inventory[item.name] = item
+            print(f"Vous avez pris l'objet '{item.name}'.")
         else:
-            print(f"Il n'y a pas d'objet nommé '{item_name}' ici.")
+            print(f"Impossible de prendre '{item_name}' : objet absent de la pièce.")
+
 
     def drop(self, item_name):
         item = self.inventory.pop(item_name, None)
         if item:
-            self.current_room.add_item(item)  # Ajouter dans la pièce
-            print(f"Vous avez déposé {item.name}.")
+            self.current_room.add_item(item)
+            print(f"Vous avez déposé l'objet '{item.name}'.")
         else:
-            print(f"Vous n'avez pas d'objet nommé '{item_name}' dans votre inventaire.") 
+            print(f"Impossible de déposer '{item_name}' : objet absent de l'inventaire.")
+
