@@ -31,7 +31,10 @@ class Game:
         self.commands["back"] = back
         look = Command("look", " : observer la pièce et voir les items présents", Actions.look, 0)
         self.commands["look"] = look
-
+        take = Command("take", " <item> : prendre un item présent dans la pièce", Actions.take, 1)
+        self.commands["take"] = take
+        drop = Command("drop", " <item> : déposer un item dans la pièce", Actions.drop, 1)
+        self.commands["drop"] = drop
         
         # Setup rooms
         cour = Room("Cour", "dans la cour du château, entourée de hauts murs de pierre.")
