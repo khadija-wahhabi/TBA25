@@ -29,6 +29,9 @@ class Game:
         self.commands["history"] = history
         back = Command("back", " : revenir à la pièce précédente", Actions.back, 0)
         self.commands["back"] = back
+        look = Command("look", " : observer la pièce et voir les items présents", Actions.look, 0)
+        self.commands["look"] = look
+
         
         # Setup rooms
         cour = Room("Cour", "dans la cour du château, entourée de hauts murs de pierre.")
