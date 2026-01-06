@@ -1,4 +1,7 @@
 # Define the Player class.
+
+from item import Item
+
 class Player:
     """
     This class represents the player in the game.
@@ -24,6 +27,7 @@ class Player:
         self.name = name
         self.current_room = None
         self.history = []
+        self.inventory = []
     
     # Define the move method.
     def move(self, direction):
@@ -63,5 +67,13 @@ class Player:
         self.current_room = self.history[-1]
         print(self.current_room.get_long_description())
         return True
+
+    def get_inventory(self):
+        if not self.inventory:
+            return "Votre inventaire est vide."
+        s = "\nVous disposez des items suivants :"
+        for item in self.inventory:
+            s += f"\n    - {item}"  # Utilise __str__ de Item
+        return s
 
     
