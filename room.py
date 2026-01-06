@@ -1,6 +1,26 @@
 # Define the Room class.
 
 class Room:
+    """
+    This class represents a location (room) in the game.
+    A room has a name, a description and exits leading to other rooms.
+
+    Attributes:
+        name (str): The name of the room.
+        description (str): A textual description of the room.
+        exits (dict): A dictionary mapping directions (str) to Room objects.
+
+    Methods:
+        __init__(self, name, description): Initializes the room.
+        get_exit(self, direction): Returns the room in the given direction.
+        get_exit_string(self): Returns a string describing the available exits.
+        get_long_description(self): Returns a detailed description of the room.
+
+    Examples:
+        >>> room = Room("Forest", "dans une forêt enchantée.")
+        >>> room.name
+        'Forest'
+    """
 
     # Define the constructor. 
     def __init__(self, name, description):
