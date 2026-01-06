@@ -47,7 +47,7 @@ class Player:
             return "Vous n'avez encore visité aucune pièce."
         s = "\nVous avez déjà visité les pièces suivantes:"
         for room in self.history:
-            s += f"\n    - {room.description}"
+            s += f"\n    - {room.name}"
         return s
 
     
