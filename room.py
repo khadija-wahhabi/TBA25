@@ -52,13 +52,13 @@ class Room:
 
     def get_inventory(self):
         if not hasattr(self, "inventory"):
-            self.inventory = {}  # dictionnaire item_name -> Item
+            self.inventory = {}  
         if not self.inventory:
             return "Il n'y a rien ici."
-    s = "La pièce contient :"
-    for item in self.inventory.values():
-        s += f"\n    - {item}"
-    return s
+        s = "La pièce contient :"
+        for item in self.inventory.values():
+            s += f"\n    - {item}"
+        return s
 
     def add_item(self, item):
         self.inventory[item.name] = item
