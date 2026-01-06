@@ -23,8 +23,10 @@ class Game:
         self.commands["help"] = help
         quit = Command("quit", " : quitter le jeu", Actions.quit, 0)
         self.commands["quit"] = quit
-        go = Command("go", " <direction> : se déplacer dans une direction cardinale (N, E, S, O)", Actions.go, 1)
+        go = Command("go", " <direction> : se déplacer dans une direction cardinale (N, E, S, O, U, D)", Actions.go, 1)
         self.commands["go"] = go
+        history_cmd = Command("history", " : afficher l'historique des pièces visitées", Actions.history, 0)
+        self.commands["history"] = history_cmd
         
         # Setup rooms
         cour = Room("Cour", "dans la cour du château, entourée de hauts murs de pierre.")
@@ -97,7 +99,7 @@ class Game:
         # Split the command string into a list of words
         list_of_words = command_string.split(" ")
 
-        command_word = list_of_words[0]
+        command_word = list_of_words[0].lower()
 
         # If the command is not recognized, print an error message
         if command_word not in self.commands.keys():
