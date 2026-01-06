@@ -59,3 +59,9 @@ class Room:
     for item in self.inventory.values():
         s += f"\n    - {item}"
     return s
+
+    def add_item(self, item):
+        self.inventory[item.name] = item
+
+    def remove_item(self, item_name):
+        return self.inventory.pop(item_name, None)
