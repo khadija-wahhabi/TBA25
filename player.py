@@ -72,7 +72,7 @@ class Player:
         if not self.inventory:
             return "Votre inventaire est vide."
         s = "\nVous disposez des items suivants :"
-        for item in self.inventory.values:
+        for item in self.inventory.values():
             s += f"\n    - {item}" 
         return s
 
