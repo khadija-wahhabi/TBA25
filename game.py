@@ -97,17 +97,19 @@ class Game:
     def process_command(self, command_string) -> None:
 
         # Split the command string into a list of words
-        list_of_words = command_string.split(" ")
+        list_of_words = command_string.strip().split()
+        if not list_of_words:
+            return
 
         command_word = list_of_words[0].lower()
 
         # If the command is not recognized, print an error message
         if command_word not in self.commands.keys():
-            print(f"\nCommande '{command_word}' non reconnue. Entrez 'help' pour voir la liste des commandes disponibles.\n")
-        # If the command is recognized, execute it
-        else:
-            command = self.commands[command_word]
-            command.action(self, list_of_words, command.number_of_parameters)
+            print(f"\nCommande '{list_of_words[0]}' non reconnue. Entrez 'help' pour voir la liste des commandes disponibles.\n")
+            return
+
+        command = self.commands[command_word]
+        command.action(self, list_of_words, command.number_of_parameters)
 
     # Print the welcome message
     def print_welcome(self):
