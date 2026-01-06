@@ -171,3 +171,14 @@ class Actions:
         
         print(game.player.get_history())
         return True
+
+    def look(game, list_of_words, number_of_parameters):
+        l = len(list_of_words)
+        if l != number_of_parameters + 1:
+            print(MSG0.format(command_word=list_of_words[0]))
+            return False
+        
+        room = game.player.current_room
+        print(room.get_long_description())
+        print(room.get_inventory())
+        return True
