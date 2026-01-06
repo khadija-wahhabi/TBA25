@@ -1,7 +1,6 @@
 # Description: Game class
 
 # Import modules
-
 from room import Room
 from player import Player
 from command import Command
@@ -20,7 +19,6 @@ class Game:
     def setup(self):
 
         # Setup commands
-
         help = Command("help", " : afficher cette aide", Actions.help, 0)
         self.commands["help"] = help
         quit = Command("quit", " : quitter le jeu", Actions.quit, 0)
@@ -29,33 +27,58 @@ class Game:
         self.commands["go"] = go
         
         # Setup rooms
+        cour = Room("Cour", "dans la cour du château, entourée de hauts murs de pierre.")
+        salle_trone = Room("Salle du trône", "dans la majestueuse salle du trône.")
+        bibliotheque = Room("Bibliothèque", "dans une bibliothèque remplie de parchemins anciens.")
+        cuisine = Room("Cuisine", "dans la cuisine du château, encore chaude.")
+        chapelle = Room("Chapelle", "dans une chapelle silencieuse et solennelle.")
+        donjon = Room("Donjon", "dans un donjon sombre et humide sous le château.")
+        armurerie = Room("Armurerie", "dans l’armurerie remplie d’armes anciennes.")
+        tour = Room("Tour", "au sommet de la tour du château, battue par le vent.")
 
-        forest = Room("Forest", "dans une forêt enchantée. Vous entendez une brise légère à travers la cime des arbres.")
-        self.rooms.append(forest)
-        tower = Room("Tower", "dans une immense tour en pierre qui s'élève au dessus des nuages.")
-        self.rooms.append(tower)
-        cave = Room("Cave", "dans une grotte profonde et sombre. Des voix semblent provenir des profondeurs.")
-        self.rooms.append(cave)
-        cottage = Room("Cottage", "dans un petit chalet pittoresque avec un toit de chaume. Une épaisse fumée verte sort de la cheminée.")
-        self.rooms.append(cottage)
-        swamp = Room("Swamp", "dans un marécage sombre et ténébreux. L'eau bouillonne, les abords sont vaseux.")
-        self.rooms.append(swamp)
-        castle = Room("Castle", "dans un énorme château fort avec des douves et un pont levis. Sur les tours, des flèches en or massif.")
-        self.rooms.append(castle)
 
         # Create exits for rooms
+        cour.exits = {
+            "N": salle_trone,
+            "E": cuisine,
+            "O": bibliotheque,
+            "S": chapelle
+        }
 
-        forest.exits = {"N" : cave, "E" : tower, "S" : castle, "O" : None}
-        tower.exits = {"N" : cottage, "E" : None, "S" : swamp, "O" : forest}
-        cave.exits = {"N" : None, "E" : cottage, "S" : forest, "O" : None}
-        cottage.exits = {"N" : None, "E" : None, "S" : tower, "O" : cave}
-        swamp.exits = {"N" : tower, "E" : None, "S" : None, "O" : castle}
-        castle.exits = {"N" : forest, "E" : swamp, "S" : None, "O" : None}
+        salle_trone.exits = {
+            "S": cour,
+            "U": tour
+        }
+
+        bibliotheque.exits = {
+            "E": cour
+        }
+
+        cuisine.exits = {
+            "O": cour
+        }
+
+        chapelle.exits = {
+            "N": cour,
+            "D": donjon
+        }
+
+        donjon.exits = {
+            "U": chapelle,
+            "S": armurerie
+        }
+
+        armurerie.exits = {
+            "N": donjon
+        }
+
+        tour.exits = {
+            "D": salle_trone
+        }
 
         # Setup player and starting room
-
         self.player = Player(input("\nEntrez votre nom: "))
-        self.player.current_room = swamp
+        self.player.current_room = cour
 
     # Play the game
     def play(self):
