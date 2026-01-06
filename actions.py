@@ -66,7 +66,8 @@ class Actions:
 
         direction = Actions.DIRECTIONS[direction_input].upper()
         player = game.player
-        player.move(direction)
+        if player.move(direction):
+            print(player.get_history())
         return True
 
     def quit(game, list_of_words, number_of_parameters):
@@ -146,4 +147,16 @@ class Actions:
         for command in game.commands.values():
             print("\t- " + str(command))
         print()
+        return True
+
+    def history(game, list_of_words, number_of_parameters):
+        """
+        Displays the history of rooms visited by the player.
+        """
+        l = len(list_of_words)
+        if l != number_of_parameters + 1:
+            print(MSG0.format(command_word=list_of_words[0]))
+            return False
+        
+        print(game.player.get_history())
         return True
