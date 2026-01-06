@@ -28,6 +28,7 @@ class Player:
         self.current_room = None
         self.history = []
         self.inventory = {}
+        self.max_weight = 10
     
     # Define the move method.
     def move(self, direction):
@@ -78,12 +79,23 @@ class Player:
 
     def take(self, item_name):
         item = self.current_room.remove_item(item_name)
-        if item:
-            self.inventory[item.name] = item
-            print(f"Vous avez pris l'objet '{item.name}'.")
-        else:
+    
+        if not item:
             print(f"Impossible de prendre '{item_name}' : objet absent de la pièce.")
+            return
 
+        total_weight = self.get_total_weight()
+
+        if total_weight + item.weight > self.max_weight:
+            print(
+                f"Impossible de prendre '{item.name}' : "
+                f"poids maximum dépassé ({total_weight}/{self.max_weight} kg)."
+            )
+            self.current_room.add_item(item)
+            return
+
+        self.inventory[item.name] = item
+        print(f"Vous avez pris l'objet '{item.name}'.")
 
     def drop(self, item_name):
         item = self.inventory.pop(item_name, None)
@@ -93,3 +105,5 @@ class Player:
         else:
             print(f"Impossible de déposer '{item_name}' : objet absent de l'inventaire.")
 
+    def get_total_weight(self):
+        return sum(item.weight for item in self.inventory.values())
