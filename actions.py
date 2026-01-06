@@ -64,7 +64,7 @@ class Actions:
             print(f"\nDirection '{list_of_words[1]}' non reconnue.\n")
             return False
 
-        direction = Actions.DIRECTIONS[direction_input]
+        direction = Actions.DIRECTIONS[direction_input].upper()
         player = game.player
         player.move(direction)
         return True
