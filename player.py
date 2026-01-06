@@ -27,7 +27,7 @@ class Player:
         self.name = name
         self.current_room = None
         self.history = []
-        self.inventory = []
+        self.inventory = {}
     
     # Define the move method.
     def move(self, direction):
@@ -72,7 +72,7 @@ class Player:
         if not self.inventory:
             return "Votre inventaire est vide."
         s = "\nVous disposez des items suivants :"
-        for item in self.inventory:
+        for item in self.inventory.values:
             s += f"\n    - {item}" 
         return s
 
