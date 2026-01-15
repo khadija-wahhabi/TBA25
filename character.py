@@ -1,7 +1,11 @@
 # Description: Character class
 
 import random
-from game import DEBUG
+try:
+    from game import DEBUG
+except ImportError:
+    DEBUG = False
+
 
 class Character:
     """
