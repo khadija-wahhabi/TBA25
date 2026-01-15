@@ -147,12 +147,19 @@ class Game:
     def play(self):
         self.setup()
         self.print_welcome()
-        # Loop until the game is finished
+
         while not self.finished:
-            # Get the command from the player
             self.process_command(input("> "))
-            self.move_characters()
-        return None
+
+            if self.win():
+                print("\n🎉 Bravo ! Vous avez complété toutes les quêtes. Vous avez gagné !\n")
+                self.finished = True
+                continue
+
+            if self.loose():
+                print("\n💀 Vous avez perdu… Entrer dans le donjon sans torche était une mauvaise idée.\n")
+                self.finished = True
+                continue
 
     # Process the command entered by the player
     def process_command(self, command_string) -> None:
