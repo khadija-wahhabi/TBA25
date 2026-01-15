@@ -29,6 +29,7 @@ class Player:
         self.history = []
         self.inventory = {}
         self.max_weight = 10
+        self.rewards = []
     
     # Define the move method.
     def move(self, direction):
@@ -82,7 +83,7 @@ class Player:
     
         if not item:
             print(f"Impossible de prendre '{item_name}' : objet absent de la pièce.")
-            return
+            return False
 
         total_weight = self.get_total_weight()
 
@@ -92,10 +93,11 @@ class Player:
                 f"poids maximum dépassé ({total_weight}/{self.max_weight} kg)."
             )
             self.current_room.add_item(item)
-            return
+            return False
 
         self.inventory[item.name] = item
         print(f"Vous avez pris l'objet '{item.name}'.")
+        return True
 
     def drop(self, item_name):
         item = self.inventory.pop(item_name, None)
@@ -107,3 +109,16 @@ class Player:
 
     def get_total_weight(self):
         return sum(item.weight for item in self.inventory.values())
+
+    def add_reward(self, reward: str):
+        self.rewards.append(reward)
+        print(f"🎁 Vous recevez la récompense: {reward}")
+
+    def get_rewards(self):
+        if not self.rewards:
+            return "Vous n'avez aucune récompense."
+        s = "\nVos récompenses :"
+        for r in self.rewards:
+            s += f"\n    - {r}"
+        return s
+
