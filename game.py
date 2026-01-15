@@ -168,7 +168,7 @@ class Game:
         q_move = Quest(
             "Atteindre la tour",
             "Montez jusqu'à la Tour du château.",
-            objectives=["visiter Tour"],
+            objectives=["Visiter Tour"],
             reward="Vue d'aigle"
         )
 
