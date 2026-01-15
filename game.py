@@ -158,6 +158,7 @@ class Game:
 
         while not self.finished:
             self.process_command(input("> "))
+            self.move_characters()
 
             if self.win():
                 print("\n🎉 Bravo ! Vous avez complété toutes les quêtes. Vous avez gagné !\n")
