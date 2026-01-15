@@ -59,6 +59,17 @@ class Game:
         armurerie = Room("Armurerie", "dans l’armurerie remplie d’armes anciennes.")
         tour = Room("Tour", "au sommet de la tour du château, battue par le vent.")
 
+        self.rooms = [
+            cour,
+            salle_trone,
+            bibliotheque,
+            cuisine,
+            chapelle,
+            donjon,
+            armurerie,
+            tour
+            ]
+
         # Create exits for rooms
         cour.exits = {
             "N": salle_trone,
