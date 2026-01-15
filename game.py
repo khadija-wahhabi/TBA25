@@ -41,8 +41,9 @@ class Game:
         self.commands["drop"] = drop
         check = Command("check", " : vérifier l'inventaire du joueur", Actions.check, 0)
         self.commands["check"] = check
+        talk = Command("talk", " <personnage> : parler à un personnage", Actions.talk, 1)
+        self.commands["talk"] = talk
 
-        
         # Setup rooms
         cour = Room("Cour", "dans la cour du château, entourée de hauts murs de pierre.")
         salle_trone = Room("Salle du trône", "dans la majestueuse salle du trône.")
@@ -52,7 +53,6 @@ class Game:
         donjon = Room("Donjon", "dans un donjon sombre et humide sous le château.")
         armurerie = Room("Armurerie", "dans l’armurerie remplie d’armes anciennes.")
         tour = Room("Tour", "au sommet de la tour du château, battue par le vent.")
-
 
         # Create exits for rooms
         cour.exits = {
