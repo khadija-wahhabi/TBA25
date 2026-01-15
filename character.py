@@ -1,5 +1,8 @@
 # Description: Character class
 
+import random
+from game import DEBUG
+
 class Character:
     """
     Classe représentant un personnage non joueur (PNJ).
@@ -29,3 +32,22 @@ class Character:
         self._msg_index = (self._msg_index + 1) % len(self.msgs)
         return msg
 
+    def move(self):
+        if random.choice([True, False]) is False:
+            return False
+
+        next_rooms = [room for room in self.current_room.exits.values() if room is not None]
+        if not next_rooms:
+            return False
+
+        old_room = self.current_room
+        new_room = random.choice(next_rooms)
+
+        old_room.remove_character(self.name.lower())
+
+        new_room.add_character(self)
+
+        if DEBUG:
+            print(f"DEBUG: {self.name} se déplace de {old_room.name} vers {new_room.name}")
+
+        return True
