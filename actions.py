@@ -209,3 +209,21 @@ class Actions:
 
         print(game.player.get_inventory())
         return True
+
+    def talk(game, list_of_words, number_of_parameters):
+        l = len(list_of_words)
+        if l != number_of_parameters + 1:
+            print(MSG1.format(command_word=list_of_words[0]))
+            return False
+
+        character_name = list_of_words[1].lower()
+        room = game.player.current_room
+
+        character = room.get_character(character_name)
+        if character is None:
+            print(f"\nPersonnage '{list_of_words[1]}' introuvable ici.\n")
+            return False
+
+        character.get_msg()
+        return True
+
