@@ -195,7 +195,7 @@ class Actions:
             return False
         item_name = list_of_words[1]
         game.player.take(item_name)
-        if hasattr(game, "on_take"):
+        if success and hasattr(game, "on_take"):
             game.on_take(item_name)
         return True
 
@@ -243,5 +243,14 @@ class Actions:
             game.on_talk(character.name)
 
         return True
+
+    def rewards(game, list_of_words, number_of_parameters):
+        l = len(list_of_words)
+        if l != number_of_parameters + 1:
+            print(MSG0.format(command_word=list_of_words[0]))
+            return False
+        print(game.player.get_rewards())
+        return True
+
 
 
