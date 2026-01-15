@@ -216,14 +216,24 @@ class Actions:
             print(MSG1.format(command_word=list_of_words[0]))
             return False
 
-        character_name = list_of_words[1].lower()
+        target_name = list_of_words[1]
         room = game.player.current_room
+        
+        character = room.characters.get(target_name.capitalize()) or room.characters.get(target_name)
 
-        character = room.get_character(character_name)
-        if character is None:
-            print(f"\nPersonnage '{list_of_words[1]}' introuvable ici.\n")
-            return False
+        if not character:
+            print(f"\nPersonnage '{target_name}' introuvable ici.\n")
+            return True
 
-        character.get_msg()
+        msg = character.get_msg()
+        if msg:
+            print(f"\n{msg}\n")
+        else:
+            print(f"\n{character.name} ne dit rien.\n")
+
+        if hasattr(game, "on_talk"):
+            game.on_talk(character.name)
+
         return True
+
 
