@@ -112,7 +112,22 @@ class Game:
         armurerie.add_item(Item("bouclier", "un bouclier solide", 4))
 
         tour.add_item(Item("longuevue", "une longue-vue ancienne", 1))
-        
+
+        #Setup characters in rooms
+        garde = Character("Garde", "un garde fatigué qui surveille l'entrée", cour,
+            ["Halte ! Personne ne passe sans autorisation."])
+
+        bibliothecaire = Character("Bibliothécaire", "une vieille dame qui murmure des secrets", bibliotheque,
+            ["Chut... certains livres ne doivent pas être ouverts."])
+
+        forgeron = Character("Forgeron", "un forgeron couvert de suie", armurerie,
+            ["Ces armes n’attendent qu’un héros digne."])
+
+        # Ajouter les PNJ aux rooms
+        cour.add_character(garde)
+        bibliotheque.add_character(bibliothecaire)
+        armurerie.add_character(forgeron)
+
         # Setup player and starting room
         self.player = Player(input("\nEntrez votre nom: "))
         self.player.current_room = cour
