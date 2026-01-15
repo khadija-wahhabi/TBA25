@@ -226,8 +226,9 @@ class Actions:
         target_name = list_of_words[1]
         room = game.player.current_room
         
-        character = room.characters.get(target_name.capitalize()) or room.characters.get(target_name)
-
+        target_key = target_name.lower()
+        character = room.characters.get(target_key)
+        
         if not character:
             print(f"\nPersonnage '{target_name}' introuvable ici.\n")
             return True
