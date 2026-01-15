@@ -7,6 +7,7 @@ from command import Command
 from actions import Actions
 from item import Item
 from character import Character
+from quest import Quest, QuestManager
 
 DEBUG = False
 
@@ -22,8 +23,8 @@ class Game:
             "item_parchemin": False,
             "reach_tour": False,
             "talk_bibliothecaire": False }
+        self.quest_manager = None
 
-    
     # Setup the game
     def setup(self):
 
@@ -48,6 +49,9 @@ class Game:
         self.commands["check"] = check
         talk = Command("talk", " <personnage> : parler à un personnage", Actions.talk, 1)
         self.commands["talk"] = talk
+        rewards = Command("rewards", " : afficher les récompenses du joueur", Actions.rewards, 0)
+        self.commands["rewards"] = rewards
+
 
         # Setup rooms
         cour = Room("Cour", "dans la cour du château, entourée de hauts murs de pierre.")
@@ -151,6 +155,38 @@ class Game:
         self.player.current_room = cour
         self.player.history.append(self.player.current_room)
 
+        # --- Setup quests ---
+        self.quest_manager = QuestManager(self.player)
+
+        q_item = Quest(
+            "Récupérer le parchemin",
+            "Retrouvez le parchemin ancien dans la Bibliothèque.",
+            objectives=["prendre parchemin"],
+            reward="Amulette du savoir"
+        )
+
+        q_move = Quest(
+            "Atteindre la tour",
+            "Montez jusqu'à la Tour du château.",
+            objectives=["visiter Tour"],
+            reward="Vue d'aigle"
+        )
+
+        q_talk = Quest(
+            "Parler à la bibliothécaire",
+            "Interrogez la bibliothécaire pour obtenir un indice.",
+            objectives=["parler bibliothecaire"],
+            reward="Indice secret"
+        )
+
+        self.quest_manager.add_quest(q_item)
+        self.quest_manager.add_quest(q_move)
+        self.quest_manager.add_quest(q_talk)
+        self.quest_manager.activate_quest("Récupérer le parchemin")
+        self.quest_manager.activate_quest("Atteindre la tour")
+        self.quest_manager.activate_quest("Parler à la bibliothécaire")
+
+
     # Play the game
     def play(self):
         self.setup()
@@ -203,19 +239,25 @@ class Game:
             c.move()
 
     def on_take(self, item_name: str):
-        if item_name.lower() == "parchemin":
-            self.quests["item_parchemin"] = True
+        if not self.quest_manager:
+            return
+        self.quest_manager.check_action_objectives("prendre", item_name.lower())
 
     def on_move(self):
-        if self.player.current_room.name.lower() == "tour":
-            self.quests["reach_tour"] = True
+        if not self.quest_manager:
+            return
+        self.quest_manager.check_room_objectives(self.player.current_room.name)
 
     def on_talk(self, character_name: str):
-        if character_name.lower() == "bibliothécaire" or character_name.lower() == "bibliothecaire":
-            self.quests["talk_bibliothecaire"] = True
+        if not self.quest_manager:
+            return
+        normalized = character_name.lower().replace("é", "e").replace("è", "e")
+        self.quest_manager.check_action_objectives("parler", normalized)
 
     def win(self) -> bool:
-        return all(self.quests.values())
+        if not self.quest_manager:
+            return False
+        return all(q.is_completed for q in self.quest_manager.get_all_quests())
 
     def loose(self) -> bool:
         if self.player.current_room.name.lower() == "donjon":
