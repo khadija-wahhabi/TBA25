@@ -194,7 +194,7 @@ class Actions:
             print(MSG1.format(command_word=list_of_words[0]))
             return False
         item_name = list_of_words[1]
-        game.player.take(item_name)
+        success = game.player.take(item_name)
         if success and hasattr(game, "on_take"):
             game.on_take(item_name)
         return True
