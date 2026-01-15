@@ -8,6 +8,8 @@ from actions import Actions
 from item import Item
 from character import Character
 
+DEBUG = False
+
 class Game:
 
     # Constructor
@@ -141,6 +143,7 @@ class Game:
         while not self.finished:
             # Get the command from the player
             self.process_command(input("> "))
+            self.move_characters()
         return None
 
     # Process the command entered by the player
@@ -167,7 +170,13 @@ class Game:
         print("Entrez 'help' si vous avez besoin d'aide.")
         #
         print(self.player.current_room.get_long_description())
-    
+
+    def move_characters(self):
+        all_chars = []
+        for room in self.rooms:
+            all_chars.extend(list(room.characters.values()))
+        for c in all_chars:
+            c.move()
 
 def main():
     # Create a game object and play the game
