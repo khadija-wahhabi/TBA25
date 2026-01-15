@@ -67,7 +67,10 @@ class Actions:
         direction = Actions.DIRECTIONS[direction_input].upper()
         player = game.player
         if player.move(direction):
-            print(player.get_history())
+            if hasattr(game, "on_move"):
+            game.on_move()
+        print(player.get_history())
+
         return True
 
     def quit(game, list_of_words, number_of_parameters):
@@ -157,6 +160,8 @@ class Actions:
         
         player = game.player
         if player.back():
+            if hasattr(game, "on_move"):
+                game.on_move()
             print(player.get_history())
         return True
 
