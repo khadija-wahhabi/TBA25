@@ -5,6 +5,7 @@ from room import Room
 from player import Player
 from command import Command
 from actions import Actions
+from item import Item
 
 class Game:
 
@@ -89,6 +90,28 @@ class Game:
             "D": salle_trone
         }
 
+        # Setup items in rooms
+        cour.add_item(Item("pierre", "une pierre ronde et lourde", 2))
+        cour.add_item(Item("torche", "une torche en bois, non allumée", 1))
+
+        salle_trone.add_item(Item("couronne", "une couronne dorée ornée de pierres", 1))
+        salle_trone.add_item(Item("sceptre", "un sceptre royal en métal", 2))
+
+        bibliotheque.add_item(Item("livre", "un livre ancien couvert de poussière", 1))
+        bibliotheque.add_item(Item("parchemin", "un parchemin jauni", 0.5))
+
+        cuisine.add_item(Item("couteau", "un couteau de cuisine bien aiguisé", 1))
+        cuisine.add_item(Item("pain", "un pain encore tiède", 0.5))
+
+        chapelle.add_item(Item("chandelier", "un chandelier en bronze", 2))
+
+        donjon.add_item(Item("chaine", "une chaîne en fer rouillée", 3))
+
+        armurerie.add_item(Item("epee", "une épée au fil tranchant", 3))
+        armurerie.add_item(Item("bouclier", "un bouclier solide", 4))
+
+        tour.add_item(Item("longuevue", "une longue-vue ancienne", 1))
+        
         # Setup player and starting room
         self.player = Player(input("\nEntrez votre nom: "))
         self.player.current_room = cour
