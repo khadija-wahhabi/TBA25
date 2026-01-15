@@ -190,6 +190,8 @@ class Actions:
             return False
         item_name = list_of_words[1]
         game.player.take(item_name)
+        if hasattr(game, "on_take"):
+            game.on_take(item_name)
         return True
 
     def drop(game, list_of_words, number_of_parameters):
