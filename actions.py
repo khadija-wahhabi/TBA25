@@ -68,7 +68,7 @@ class Actions:
         player = game.player
         if player.move(direction):
             if hasattr(game, "on_move"):
-            game.on_move()
+                game.on_move()
         print(player.get_history())
 
         return True
