@@ -48,9 +48,6 @@ class Game:
         self.commands["check"] = check
         talk = Command("talk", " <personnage> : parler à un personnage", Actions.talk, 1)
         self.commands["talk"] = talk
-        talk = Command("talk", " <pnj> : parler à un personnage", Actions.talk, 1)
-        self.commands["talk"] = talk
-
 
         # Setup rooms
         cour = Room("Cour", "dans la cour du château, entourée de hauts murs de pierre.")
