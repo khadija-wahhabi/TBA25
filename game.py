@@ -18,6 +18,11 @@ class Game:
         self.rooms = []
         self.commands = {}
         self.player = None
+        self.quests = {
+            "item_parchemin": False,
+            "reach_tour": False,
+            "talk_bibliothecaire": False }
+
     
     # Setup the game
     def setup(self):
@@ -43,6 +48,9 @@ class Game:
         self.commands["check"] = check
         talk = Command("talk", " <personnage> : parler à un personnage", Actions.talk, 1)
         self.commands["talk"] = talk
+        talk = Command("talk", " <pnj> : parler à un personnage", Actions.talk, 1)
+        self.commands["talk"] = talk
+
 
         # Setup rooms
         cour = Room("Cour", "dans la cour du château, entourée de hauts murs de pierre.")
@@ -178,10 +186,30 @@ class Game:
         for c in all_chars:
             c.move()
 
+    def on_take(self, item_name: str):
+        if item_name.lower() == "parchemin":
+            self.quests["item_parchemin"] = True
+
+    def on_move(self):
+        if self.player.current_room.name.lower() == "tour":
+            self.quests["reach_tour"] = True
+
+    def on_talk(self, character_name: str):
+        if character_name.lower() == "bibliothécaire" or character_name.lower() == "bibliothecaire":
+            self.quests["talk_bibliothecaire"] = True
+
+    def win(self) -> bool:
+        return all(self.quests.values())
+
+    def loose(self) -> bool:
+        if self.player.current_room.name.lower() == "donjon":
+            has_torch = "torche" in self.player.inventory
+            return not has_torch
+        return False
+        
 def main():
     # Create a game object and play the game
     Game().play()
-    
 
 if __name__ == "__main__":
     main()
