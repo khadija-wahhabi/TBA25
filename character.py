@@ -15,18 +15,17 @@ class Character:
         self.name = name
         self.description = description
         self.current_room = current_room
-        self.msgs = msgs[:] 
+        self.msgs = msgs[:]
+        self._msg_index = 0 
 
     def __str__(self):
         return f"{self.name} : {self.description}"
 
     def get_msg(self):
         if not self.msgs:
-            print(f"{self.name} ne dit rien.")
-            return None
+            return ""
 
-        msg = self.msgs.pop(0)
-        print(msg)
-        self.msgs.append(msg)
+        msg = self.msgs[self._msg_index]
+        self._msg_index = (self._msg_index + 1) % len(self.msgs)
         return msg
 
