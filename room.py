@@ -70,15 +70,18 @@ class Room:
 
         return "On voit:\n" + "\n".join(lines)
 
-
     def add_item(self, item):
         self.inventory[item.name] = item
 
     def remove_item(self, item_name):
         return self.inventory.pop(item_name, None)
 
+    def get_character(self, character_name):
+        return self.characters.get(character_name, None)
+
     def add_character(self, character):
-        self.characters[character.name] = character
+        self.characters[character.name.lower()] = character
+        character.current_room = self
 
     def remove_character(self, character_name):
         return self.characters.pop(character_name, None)
