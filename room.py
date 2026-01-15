@@ -28,6 +28,7 @@ class Room:
         self.description = description
         self.exits = {}
         self.inventory = {}
+        self.characters = {} 
     
     # Define the get_exit method.
     def get_exit(self, direction):
@@ -52,15 +53,33 @@ class Room:
         return f"\nVous êtes {self.description}\n\n{self.get_exit_string()}\n"
 
     def get_inventory(self):
-        if not self.inventory:
+        lines = []
+
+        # Items
+        if self.inventory:
+            for item in self.inventory.values():
+                lines.append(f"    - {item}")
+
+        # PNJ
+        if self.characters:
+            for character in self.characters.values():
+                lines.append(f"    - {character}")
+
+        if not lines:
             return "Il n'y a rien ici."
-        s = "La pièce contient :"
-        for item in self.inventory.values():
-            s += f"\n    - {item}"
-        return s
+
+        return "On voit:\n" + "\n".join(lines)
+
 
     def add_item(self, item):
         self.inventory[item.name] = item
 
     def remove_item(self, item_name):
         return self.inventory.pop(item_name, None)
+
+    def add_character(self, character):
+        self.characters[character.name] = character
+
+    def remove_character(self, character_name):
+        return self.characters.pop(character_name, None)
+
